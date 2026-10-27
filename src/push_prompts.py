@@ -46,7 +46,7 @@ from utils import load_yaml, check_env_vars, print_section_header, validate_prom
 
 load_dotenv()
 
-# Garantir encoding UTF-8 no stdout/stderr no Windows
+# Fix para problemas de encoding no Windows, que podem gerar erros de UnicodeEncodeError
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
     try:
         sys.stdout.reconfigure(encoding="utf-8")

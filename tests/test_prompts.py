@@ -81,5 +81,26 @@ class TestPrompts:
         assert len(techniques) >= 2, f"Mínimo de 2 técnicas requeridas, encontradas: {len(techniques)}"
 
 
+@pytest.mark.parametrize(
+    ("model_name", "expected_temperature"),
+    [
+        ("gpt-6.1-terra", 1),
+        ("gpt-5", 1),
+        ("o3-mini", 1),
+        ("gpt-4o", 0),
+    ],
+)
+def test_openai_model_temperature_compatibility(monkeypatch, model_name, expected_temperature):
+    """Usa a temperatura padrão nos modelos OpenAI que não aceitam customização."""
+    from utils import get_llm
+
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+
+    llm = get_llm(model=model_name, temperature=0)
+
+    assert llm.temperature == expected_temperature
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v", "--tb=short"])

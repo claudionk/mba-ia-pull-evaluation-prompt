@@ -3,6 +3,7 @@ Funções auxiliares para o projeto de otimização de prompts.
 """
 
 import os
+import re
 import yaml
 import json
 from typing import Dict, Any, Optional
@@ -208,6 +209,13 @@ def get_llm(model: Optional[str] = None, temperature: float = 0.0):
                 "OPENAI_API_KEY não configurada no .env\n"
                 "Obtenha uma chave em: https://platform.openai.com/api-keys"
             )
+        # Fix para novos modelos, tanto o modelo principal quanto o avaliador recebiam temperature=0, mas os modelos configurados (gpt-6-luna/gpt-6.1-terra) aceitam apenas o valor padrão 1
+        model_family = re.match(r"^(?:gpt-(\d+)|o(\d+))", model_name.lower())
+        if model_family and (
+            (model_family.group(1) and int(model_family.group(1)) >= 5)
+            or model_family.group(2)
+        ):
+            temperature = 1
 
         return ChatOpenAI(
             model=model_name,

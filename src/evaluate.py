@@ -36,6 +36,7 @@ APPROVAL_THRESHOLD = 0.8
 # Ordem em que as métricas aparecem no relatório e no LangSmith
 METRIC_KEYS = ["helpfulness", "correctness", "f1_score", "clarity", "precision"]
 
+# Fix para problemas de encoding no Windows, que podem gerar erros de UnicodeEncodeError
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
     try:
         sys.stdout.reconfigure(encoding="utf-8")
