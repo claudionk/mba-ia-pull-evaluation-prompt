@@ -39,6 +39,12 @@ DICAS DE IMPLEMENTAÇÃO:
 import os
 import sys
 from pathlib import Path
+from dotenv import load_dotenv
+from langsmith import Client
+from langchain_core.prompts import ChatPromptTemplate
+from utils import load_yaml, check_env_vars, print_section_header, validate_prompt_structure
+
+load_dotenv()
 
 # Garantir encoding UTF-8 no stdout/stderr no Windows
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
@@ -47,14 +53,7 @@ if sys.stdout and hasattr(sys.stdout, "reconfigure"):
         sys.stderr.reconfigure(encoding="utf-8")
     except Exception:
         pass
-
-from dotenv import load_dotenv
-from langsmith import Client
-from langchain_core.prompts import ChatPromptTemplate
-from utils import load_yaml, check_env_vars, print_section_header, validate_prompt_structure
-
-load_dotenv()
-
+        
 
 def validate_prompt(prompt_data: dict) -> tuple[bool, list]:
     """

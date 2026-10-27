@@ -19,13 +19,6 @@ Configure o provider no arquivo .env através da variável LLM_PROVIDER.
 
 import os
 import sys
-
-if sys.stdout and hasattr(sys.stdout, "reconfigure"):
-    try:
-        sys.stdout.reconfigure(encoding="utf-8")
-        sys.stderr.reconfigure(encoding="utf-8")
-    except Exception:
-        pass
 import json
 from typing import List, Dict, Any
 from pathlib import Path
@@ -42,6 +35,13 @@ APPROVAL_THRESHOLD = 0.8
 
 # Ordem em que as métricas aparecem no relatório e no LangSmith
 METRIC_KEYS = ["helpfulness", "correctness", "f1_score", "clarity", "precision"]
+
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 
 def get_llm():

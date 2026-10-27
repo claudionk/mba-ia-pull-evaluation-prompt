@@ -32,6 +32,11 @@ DICAS DE IMPLEMENTAÇÃO:
 import os
 import sys
 from pathlib import Path
+from dotenv import load_dotenv
+from langsmith import Client
+from utils import save_yaml, check_env_vars, print_section_header
+
+load_dotenv()
 
 # Garantir encoding UTF-8 no stdout/stderr no Windows
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
@@ -40,12 +45,6 @@ if sys.stdout and hasattr(sys.stdout, "reconfigure"):
         sys.stderr.reconfigure(encoding="utf-8")
     except Exception:
         pass
-
-from dotenv import load_dotenv
-from langsmith import Client
-from utils import save_yaml, check_env_vars, print_section_header
-
-load_dotenv()
 
 
 def extract_template(message) -> str:
